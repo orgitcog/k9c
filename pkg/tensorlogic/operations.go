@@ -166,7 +166,13 @@ func LogicalAnd(a, b *Tensor) (*Tensor, error) {
 		return nil, fmt.Errorf("tensor shapes must match: %v vs %v", a.Shape, b.Shape)
 	}
 	
-	result := NewTensor(a.Shape, BooleanMode)
+	// Determine result mode: continuous if either input is continuous
+	mode := BooleanMode
+	if a.Mode == ContinuousMode || b.Mode == ContinuousMode {
+		mode = ContinuousMode
+	}
+	
+	result := NewTensor(a.Shape, mode)
 	for i := range a.Data {
 		if a.Mode == BooleanMode && b.Mode == BooleanMode {
 			// Boolean AND
@@ -190,7 +196,13 @@ func LogicalOr(a, b *Tensor) (*Tensor, error) {
 		return nil, fmt.Errorf("tensor shapes must match: %v vs %v", a.Shape, b.Shape)
 	}
 	
-	result := NewTensor(a.Shape, BooleanMode)
+	// Determine result mode: continuous if either input is continuous
+	mode := BooleanMode
+	if a.Mode == ContinuousMode || b.Mode == ContinuousMode {
+		mode = ContinuousMode
+	}
+	
+	result := NewTensor(a.Shape, mode)
 	for i := range a.Data {
 		if a.Mode == BooleanMode && b.Mode == BooleanMode {
 			// Boolean OR

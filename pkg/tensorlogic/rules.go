@@ -18,6 +18,7 @@ package tensorlogic
 
 import (
 	"fmt"
+	"math"
 )
 
 // Rule represents a logic rule in tensor form
@@ -92,7 +93,7 @@ func (r *Rule) Query(query *Tensor) (bool, error) {
 	// For continuous mode, use threshold matching
 	threshold := 0.1
 	for i := range result.Data {
-		if result.Data[i]-query.Data[i] > threshold || query.Data[i]-result.Data[i] > threshold {
+		if math.Abs(result.Data[i]-query.Data[i]) > threshold {
 			return false, nil
 		}
 	}

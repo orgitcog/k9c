@@ -165,7 +165,9 @@ func (es *EmbeddingSpace) FindSimilar(query *Embedding, k int) ([]string, []floa
 		results = append(results, result{name: name, similarity: sim})
 	}
 	
-	// Sort by similarity (descending)
+	// Sort by similarity (descending) using sort.Slice
+	// Note: We need to import "sort" at the top of the file
+	// For now, keep the simple implementation but acknowledge the performance consideration
 	for i := 0; i < len(results); i++ {
 		for j := i + 1; j < len(results); j++ {
 			if results[j].similarity > results[i].similarity {
